@@ -15,6 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import CompoClasses from "./ComboClasses";
 
 const Search = styled("div")(({ theme }) => ({
@@ -57,8 +58,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function MyAppBar({ classes, students, handleSelectedClassChange }) {
-    console.log("MyAppBar", classes, students);
+export default function MyAppBar({handleSelectedClassChange,addNewStudent,totalStudent }) {
+    // console.log("MyAppBar", classes, students);
     const [selectedClass,handleClassChange] = React.useState(0)
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -86,8 +87,15 @@ export default function MyAppBar({ classes, students, handleSelectedClassChange 
   const handleChange = (selectedClass) => {
     handleClassChange(selectedClass)
     console.log("MyAppBar chọn: ", selectedClass);
+    handleSelectedClassChange(selectedClass)
   };
 
+  const handleAddStudent = () => {
+    if(selectedClass){
+      console.log("MyAppBar them sinh vien: ",selectedClass)
+      addNewStudent()
+    }
+  }
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -199,12 +207,25 @@ export default function MyAppBar({ classes, students, handleSelectedClassChange 
               size="large"
               edge="end"
               aria-label="account of current user"
+              aria-haspopup="true"
+              onClick = {handleAddStudent}
+              disabled = {selectedClass === ''}
+              color="inherit"
+            >
+              <PersonAddAlt1Icon />
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle />
+              <Badge badgeContent={totalStudent} color="error">
+                <AccountCircle />
+              </Badge>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

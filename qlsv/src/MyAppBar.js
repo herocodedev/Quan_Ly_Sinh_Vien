@@ -209,7 +209,7 @@ export default function MyAppBar({handleSelectedClassChange,addNewStudent,totalS
               aria-label="account of current user"
               aria-haspopup="true"
               onClick = {handleAddStudent}
-              disabled = {selectedClass === ''}
+              disabled = {selectedClass === '' || !selectedClass}
               color="inherit"
             >
               <PersonAddAlt1Icon />
